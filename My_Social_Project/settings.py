@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'App_Login',
     'crispy_forms',
     'App_Posts',
+    'App_chat',
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -55,6 +59,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+        
+       
+}
+
 
 ROOT_URLCONF = 'My_Social_Project.urls'
 
@@ -73,8 +89,8 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'My_Social_Project.wsgi.application'
+ASGI_APPLICATION = 'My_Social_Project.routing.application'
+# WSGI_APPLICATION = 'My_Social_Project.wsgi.application'
 
 
 # Database
@@ -120,7 +136,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 

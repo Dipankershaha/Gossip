@@ -31,6 +31,8 @@
       {%if not already_followed %}
       <a href="{% url 'App_Login:follow' username=user_other.username %}" class="btn btn-primary">Follow</a>
      {% else %}
+
+     <a href="{% url 'App_chat:chat' username=user_other.username %}?token={{token}}" class="btn btn-primary">Message</a>
      <a href="{% url 'App_Login:unfollow' username=user_other.username %}" class="btn btn-primary">Unfollow</a>
      {% endif %}
     </h1>

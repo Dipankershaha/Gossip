@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from App_Posts.forms import PostForm
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 # Create your views here.
@@ -35,6 +36,7 @@ def login_page(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
+            token, _ = Token.objects.get_or_create(user=user)
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(reverse('App_Posts:home'))
@@ -76,9 +78,12 @@ def profile(request):
 def user(request, username):
     user_other = User.objects.get(username=username)
     already_followed = Follow.objects.filter(follower=request.user, following=user_other)
+    # token = parse_qs(request.scope["query_string"].decode("utf*"))["token"][0]
+    tokenObject = Token.objects.get(user=request.user)
+    token= tokenObject.key
     if user_other == request.user:
         return HttpResponseRedirect(reverse('App_Login:profile'))
-    return render(request, 'App_Login/user_other.html', context={'user_other':user_other, 'already_followed':already_followed})
+    return render(request, 'App_Login/user_other.html', context={'user_other':user_other, 'already_followed':already_followed, 'token':token})
 
 @login_required
 def follow(request, username):

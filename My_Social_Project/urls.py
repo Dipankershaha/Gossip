@@ -23,6 +23,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('accounts/', include('App_Login.urls')),
     path('post/', include('App_Posts.urls')),
+    path('chat/', include('App_chat.urls')),
 
 ]
 

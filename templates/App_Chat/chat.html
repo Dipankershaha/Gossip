@@ -1,0 +1,72 @@
+
+{% extends 'APP_Chat/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-6 form-group">
+        <form id="message-form" class="form-">
+            {% csrf_token %}
+            <input class=" ml-5" type="text" name="message" id="message" required>
+            <input  type="submit" value="Send" class="btn btn-primary ml-5">
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <h3>You: {{me.username}}</h3>
+        <h3>Thread: {{user.username}}</h3>
+        <ul  id="message-list">
+            {% for message in messages %}
+            <li>[{{message.sender.username}}]: {{message.text}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+    
+
+{% endblock content %}
+{% block custom_javascript %}
+<script>
+    var birds = document.getElementById("message-list");
+    var i = birds.childNodes.length;
+    while (i--)
+    birds.appendChild(birds.childNodes[i]);
+    let url='ws://localhost:8000/ws' + window.location.pathname;
+    console.log(url);
+    const parts = window.location.href.split('?')
+    if(parts.length == 2){
+        url += '?' + parts[1];
+    }
+    console.log(url);
+    const ws = new WebSocket(url);
+    ws.onopen = function(event){
+        console.log("Connection is openned");
+        ws.send("Thank you for connecting")
+    }
+    ws.onmessage = function(event){
+        console.log(event);
+        console.log("Message is received");
+        const ul = document.getElementById('message-list');
+        var li = document.createElement('li');
+        var data = JSON.parse(event.data);
+        li.append(document.createTextNode(
+            '[' + data.username + ']:'+ data.text
+        ));
+        ul.append(li);
+        
+    }
+    ws.onclose = function(event){
+        console.log("Connection is closed");
+    }
+    ws.onerror = function(event){
+        console.log("something went wrong");
+    }
+    const messageForm = document.getElementById('message-form');
+    messageForm.addEventListener('submit', sendMessage)
+    function sendMessage(e){
+        if(e.preventDefault) e.preventDefault();
+        ws.send(document.getElementById('message').value)
+        messageForm.reset();
+        return false;
+    }
+</script>
+{% endblock custom_javascript %} 
