@@ -61,7 +61,7 @@ pylint-plugin-utils==0.6
 pyOpenSSL==20.0.1
 python-dateutil==1.5
 pytz==2020.4
-pywin32==227
+
 redis==3.5.3
 requests==2.25.0
 screen==1.0.1
