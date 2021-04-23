@@ -49,6 +49,7 @@ Markdown==3.3.3
 mccabe==0.6.1
 msgpack==1.0.2
 Pillow==8.1.2
+pip==20.3.3
 psycopg2==2.8.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
@@ -61,7 +62,7 @@ pylint-plugin-utils==0.6
 pyOpenSSL==20.0.1
 python-dateutil==1.5
 pytz==2020.4
-pywin32==392
+# pywin32==227
 redis==3.5.3
 requests==2.25.0
 screen==1.0.1
