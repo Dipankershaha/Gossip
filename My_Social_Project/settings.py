@@ -152,4 +152,4 @@ STATICFILES_DIRS = [STATIC_DIR,]
 #MEDIA
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-jango_heroku.settings(locals())
+django_heroku.settings(locals())
