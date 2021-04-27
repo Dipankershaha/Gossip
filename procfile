@@ -1,1 +1,0 @@
-web: gunicorn My_Social_Project.asgi --log-file -
