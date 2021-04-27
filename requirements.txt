@@ -53,7 +53,7 @@ pylint-django==2.4.2
 pylint-plugin-utils==0.6
 pyOpenSSL==20.0.1
 pytz==2020.5
-pywin32==227
+
 redis==3.5.3
 requests==2.22.0
 service-identity==18.1.0
