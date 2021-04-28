@@ -30,7 +30,7 @@ SECRET_KEY = 't2*ip%)j6!9__hy)4e=x83k*ker#4v6w#1+(tcyll(76wj5c+j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','gossiiip.herokuapp.com']
 
 
 # Application definition
@@ -140,9 +140,26 @@ USE_L10N = True
 
 USE_TZ = True
 
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
+#     }
+# }
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+    },
+}
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION":[os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
     }
 }
 # Static files (CSS, JavaScript, Images)
@@ -151,12 +168,11 @@ CHANNEL_LAYERS = {
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
 
-#MEDIA
-MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = '/media/'
+
 django_heroku.settSTATIC_URL = '/static/'
-# STATICFILES_DIRS = [STATIC_DIR,]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR,]
+
 
 #MEDIA
 MEDIA_ROOT = MEDIA_DIR
