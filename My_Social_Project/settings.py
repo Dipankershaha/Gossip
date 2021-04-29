@@ -166,12 +166,8 @@ CACHES = {
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR,]
-
-
-django_heroku.settSTATIC_URL = '/static/'
+# STATICFILES_DIRS = [STATIC_DIR,]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [STATIC_DIR,]
 
 
 #MEDIA
